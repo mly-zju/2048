@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>2048 game made by mly. Please have fun!</title>
+<style type="text/css">
+div{
+margin:auto;
+width:336px;
+height:336px;
+background-color:#BEBEBE;
+}
+.idle{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#984B4B;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d2{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#949449;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d4{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#4F9D9D;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d8{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#7373B9;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d16{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#9F4D95;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d32{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#73BF00;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d64{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#8C8C00;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d128{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#AE8F00;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d256{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#D26900;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d512{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#BB3D00;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d1024{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#FF0080;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+.d2048{
+float:left;
+margin:2px;
+width:80px;
+height:80px;
+background-color:#CE0000;
+color:white;
+text-align:center;
+font-size:25px;
+line-height:80px;
+}
+</style>
+</head>
+<body onkeydown="mymove()">
+<div>
+<div class="idle"></div>
+<div class="idle"></div>
+<div class="idle"></div>
+<div class="idle"></div>
+<div class="idle"></div>
+<div class="d2048"></div>
+<div class="d1024"></div>
+<div class="d512"></div>
+<div class="d256"></div>
+<div class="d128"></div>
+<div class="d64"></div>
+<div class="d32"></div>
+<div class="d16"></div>
+<div class="d8"></div>
+<div class="d4"></div>
+<div class="d2"></div>
+</div>
+<ul>
+	<li>你好</li>
+	<li>哈哈</li>
+</ul>
+
+<script>
+var class_set=["idle","d2","d4","d8","d16","d32","d64","d128","d256","d512","d1024","d2048"];
+var cont=[" ","2","4","8","16","32","64","128","256","512","1024","2048"];
+var y=document.getElementsByTagName("div");
+for(i=1;i<y.length;i++)
+	y[i].className="idle";
+var x=new Array();
+for(i=1;i<y.length;i++)
+	x[i-1]=y[i];
+var block_value=new Array();
+block_value[0]=[0,0,0,0];
+block_value[1]=[0,0,0,0];
+block_value[2]=[0,0,0,0];
+block_value[3]=[0,0,0,0];
+x1=Math.floor(4*Math.random());
+x2=Math.floor(4*Math.random());
+x3=Math.floor(4*Math.random());
+x4=Math.floor(4*Math.random());
+while(x3==x1&&x4==x2)
+{
+	x3=Math.floor(4*Math.random());
+	x4=Math.floor(4*Math.random());
+}
+block_value[x1][x2]=Math.floor(2*Math.random())+1;
+block_value[x3][x4]=Math.floor(2*Math.random())+1;
+x[4*x1+x2].className=class_set[block_value[x1][x2]];
+x[4*x1+x2].innerHTML=cont[block_value[x1][x2]];
+x[4*x3+x4].className=class_set[block_value[x3][x4]];
+x[4*x3+x4].innerHTML=cont[block_value[x3][x4]];
+/*
+x[0].className="d4";
+x[0].innerHTML="4";
+x[4].className="d2";
+x[4].innerHTML="2";
+x[8].className="d2";
+x[8].innerHTML="2";
+x[12].className="d4";
+x[12].innerHTML="4";
+block_value[0][0]=2;
+block_value[1][0]=1;
+block_value[2][0]=1;
+block_value[3][0]=2;
+x[0].className="d4";
+x[0].innerHTML="4";
+x[1].className="d2";
+x[1].innerHTML="2";
+x[2].className="d2";
+x[2].innerHTML="2";
+x[3].className="d4";
+x[3].innerHTML="4";
+block_value[0][0]=2;
+block_value[0][1]=1;
+block_value[0][2]=1;
+block_value[0][3]=2;*/
+function mymove()
+{
+	var key=event.keyCode;
+	//console.log(key);
+	if(key==38) //up
+	{
+		for(i=0;i<4;i++)
+		{
+			var flag=true;
+			for(j=1;j<4;j++)
+			{
+				if(block_value[j][i]==0)
+					continue;
+				for(k=j;k>0;k--)
+				{
+					if(block_value[k][i]==block_value[k-1][i])
+					{
+						if(flag==true)
+						{
+							block_value[k-1][i]++;
+							block_value[k][i]=0;
+							x[4*(k-1)+i].className=class_set[block_value[k-1][i]];
+							x[4*(k-1)+i].innerHTML=cont[block_value[k-1][i]];
+							x[4*k+i].className="idle";
+							x[4*k+i].innerHTML=cont[block_value[k][i]];
+							flag=false;
+						}
+						//else if(block_value[k-2][i]==0)
+						else
+						{
+							if(k-2>=0)
+								index=k-2;
+							else index=0;
+							if(block_value[index][i]==0)
+							{
+								block_value[k-2][i]=block_value[k][i];
+								block_value[k][i]=0;
+								x[4*(k-2)+i].className=class_set[block_value[k-2][i]];
+								x[4*(k-2)+i].innerHTML=cont[block_value[k-2][i]];
+								x[4*k+i].className="idle";
+								x[4*k+i].innerHTML=cont[block_value[k][i]];
+							}
+						}
+					}
+					else if(block_value[k-1][i]==0)
+					{
+						block_value[k-1][i]=block_value[k][i];
+						block_value[k][i]=0;
+						x[4*(k-1)+i].className=class_set[block_value[k-1][i]];
+						x[4*(k-1)+i].innerHTML=cont[block_value[k-1][i]];
+						x[4*k+i].className="idle";
+						x[4*k+i].innerHTML=cont[block_value[k][i]];
+					}
+				}
+			}
+		}
+	}
+	else if(key==40) //down
+	{
+		for(i=0;i<4;i++)
+		{
+			var flag=true;
+			for(j=2;j>=0;j--)
+			{
+				if(block_value[j][i]==0)
+					continue;
+				for(k=j;k<3;k++)
+				{
+					if(block_value[k][i]==block_value[k+1][i])
+					{
+						if(flag==true)
+						{
+							block_value[k+1][i]++;
+							block_value[k][i]=0;
+							x[4*(k+1)+i].className=class_set[block_value[k+1][i]];
+							x[4*(k+1)+i].innerHTML=cont[block_value[k+1][i]];
+							x[4*k+i].className="idle";
+							x[4*k+i].innerHTML=cont[block_value[k][i]];
+							flag=false;
+						}
+						else 
+						{
+							if(k+2>3)
+								index=3;
+							else
+								index=k+2;
+							if(block_value[index][i]==0)
+							{
+								block_value[k+2][i]=block_value[k][i];
+								block_value[k][i]=0;
+								x[4*(k+2)+i].className=class_set[block_value[k+2][i]];
+								x[4*(k+2)+i].innerHTML=cont[block_value[k+2][i]];
+								x[4*k+i].className="idle";
+								x[4*k+i].innerHTML=cont[block_value[k][i]];
+							}
+						}
+					}
+					else if(block_value[k+1][i]==0)
+					{
+						block_value[k+1][i]=block_value[k][i];
+						block_value[k][i]=0;
+						x[4*(k+1)+i].className=class_set[block_value[k+1][i]];
+						x[4*(k+1)+i].innerHTML=cont[block_value[k+1][i]];
+						x[4*k+i].className="idle";
+						x[4*k+i].innerHTML=cont[block_value[k][i]];
+					}
+				}
+			}
+		}
+	}
+	else if(key==37) //left
+	{
+		for(i=0;i<4;i++)
+		{
+			var flag=true;
+			for(j=1;j<4;j++)
+			{
+				if(block_value[i][j]==0)
+					continue;
+				for(k=j;k>0;k--)
+				{
+					if(block_value[i][k]==block_value[i][k-1])
+					{
+						if(flag==true)
+						{
+							block_value[i][k-1]++;
+							block_value[i][k]=0;
+							x[4*i+k-1].className=class_set[block_value[i][k-1]];
+							x[4*i+k-1].innerHTML=cont[block_value[i][k-1]];
+							x[4*i+k].className="idle";
+							x[4*i+k].innerHTML=cont[block_value[i][k]];
+							flag=false;
+						}
+						else 
+						//else
+						{
+							if(k-2>=0)
+								index=k-2;
+							else 
+								index=0;
+							if(block_value[i][index]==0)
+							{
+								block_value[i][k-2]=block_value[i][k];
+								block_value[i][k]=0;
+								x[4*i+k-2].className=class_set[block_value[i][k-2]];
+								x[4*i+k-2].innerHTML=cont[block_value[i][k-2]];
+								x[4*i+k].className="idle";
+								x[4*i+k].innerHTML=cont[block_value[i][k]];
+							}
+						}
+					}
+					else if(block_value[i][k-1]==0)
+					{
+						block_value[i][k-1]=block_value[i][k];
+						block_value[i][k]=0;
+						x[4*i+k-1].className=class_set[block_value[i][k-1]];
+						x[4*i+k-1].innerHTML=cont[block_value[i][k-1]];
+						x[4*i+k].className="idle";
+						x[4*i+k].innerHTML=cont[block_value[i][k]];
+					}
+				}
+			}
+		}
+	}
+	else if(key==39) //right
+	{
+		for(i=0;i<4;i++)
+		{
+			var flag=true;
+			for(j=2;j>=0;j--)
+			{
+				if(block_value[i][j]==0)
+					continue;
+				for(k=j;k<3;k++)
+				{
+					if(block_value[i][k]==block_value[i][k+1])
+					{
+						if(flag==true)
+						{
+							console.log(1);
+							block_value[i][k+1]++;
+							block_value[i][k]=0;
+							x[4*i+k+1].className=class_set[block_value[i][k+1]];
+							x[4*i+k+1].innerHTML=cont[block_value[i][k+1]];
+							x[4*i+k].className="idle";
+							x[4*i+k].innerHTML=cont[block_value[i][k]];
+							flag=false;
+						}
+						else if(block_value[i][k+2]==0)
+						{
+							if(k+2>3)
+								index=3;
+							else 
+								index=k+2;
+							if(block_value[i][index]==0)
+							{
+								console.log(2);
+								block_value[i][k+2]=block_value[i][k];
+								block_value[i][k]=0;
+								x[4*i+k+2].className=class_set[block_value[i][k+2]];
+								x[4*i+k+2].innerHTML=cont[block_value[i][k+2]];
+								x[4*i+k].className="idle";
+								x[4*i+k].innerHTML=cont[block_value[i][k]];
+							}
+						}
+					}
+					else if(block_value[i][k+1]==0)
+					{
+						console.log(3);
+						block_value[i][k+1]=block_value[i][k];
+						block_value[i][k]=0;
+						x[4*i+k+1].className=class_set[block_value[i][k+1]];
+						x[4*i+k+1].innerHTML=cont[block_value[i][k+1]];
+						x[4*i+k].className="idle";
+						x[4*i+k].innerHTML=cont[block_value[i][k]];
+					}
+					else
+						console.log(4);
+				}
+			}
+		}
+	}
+	if(key==37||key==38||key==39||key==40)
+	{
+		var fail=false;
+		if(document.getElementsByClassName("idle").length!=0)
+		{
+			x1=Math.floor(4*Math.random());
+			x2=Math.floor(4*Math.random());
+			while(block_value[x1][x2]!=0)
+			{
+				x1=Math.floor(4*Math.random());
+				x2=Math.floor(4*Math.random());
+			}
+			block_value[x1][x2]=Math.floor(2*Math.random())+1;
+			x[4*x1+x2].className=class_set[block_value[x1][x2]];
+			x[4*x1+x2].innerHTML=cont[block_value[x1][x2]];
+		}
+		else
+		{
+			for(i=0;i<4;i++)
+				for(j=0;j<3;j++)
+					if(block_value[i][j]==block_value[i][j+1]||block_value[j][i]==block_value[j+1][i])
+					{
+						fail=true;
+						break;
+					}
+			if(fail==false)
+			{
+				alert("You have failed!");
+				for(i=0;i<4;i++)
+					for(j=0;j<4;j++)
+					{
+						block_value[i][j]=0;
+						x[4*i+j].className=class_set[block_value[i][j]];
+						x[4*i+j].innerHTML=cont[block_value[i][j]];
+					}
+				x1=Math.floor(4*Math.random());
+				x2=Math.floor(4*Math.random());
+				x3=Math.floor(4*Math.random());
+				x4=Math.floor(4*Math.random());
+				while(x3==x1&&x4==x2)
+				{
+					x3=Math.floor(4*Math.random());
+					x4=Math.floor(4*Math.random());
+				}
+				block_value[x1][x2]=Math.floor(2*Math.random())+1;
+				block_value[x3][x4]=Math.floor(2*Math.random())+1;
+				//console.log(4*x1+x2);
+				x[4*x1+x2].className=class_set[block_value[x1][x2]];
+				//console.log(4*x1+x2);
+				x[4*x1+x2].innerHTML=cont[block_value[x1][x2]];
+				x[4*x3+x4].className=class_set[block_value[x3][x4]];
+				x[4*x3+x4].innerHTML=cont[block_value[x3][x4]];
+				return;
+			}
+		}
+	}
+}	
+</script>
+</body>
+</html>
